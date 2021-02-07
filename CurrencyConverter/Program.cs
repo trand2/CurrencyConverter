@@ -83,7 +83,8 @@ namespace CurrencyConverter
             {
                 Console.WriteLine("\nHow much " + currencyFrom + " would you like to convert to " + currencyTo + "?");
 
-                //Check to see if user input is a valid format (i.e. decimal)
+                // Check to see if user input is a valid format (i.e. decimal)
+                // If so then store the value in amount and change isDecimals value to true
                 isDecimal = decimal.TryParse(Console.ReadLine(), out amount);
 
                 if (!isDecimal)
