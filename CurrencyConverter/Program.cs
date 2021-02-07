@@ -9,8 +9,11 @@ namespace CurrencyConverter
 {
     class MainClass
     {
+        //URL for API call to get exchange rates
         private const string URL = "https://free.currencyconverterapi.com";
         private const string API_KEY = "bad232ddd5f3d59564e9";
+
+        // List of all currency codes
         private static string[] currencyCodes = { "AED", "AFN", "ALL", "AMD", "ANG",
             "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD",
             "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYR",
