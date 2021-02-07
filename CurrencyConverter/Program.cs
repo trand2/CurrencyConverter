@@ -9,10 +9,9 @@ namespace CurrencyConverter
 {
     class MainClass
     {
-
         private const string URL = "https://free.currencyconverterapi.com";
         private const string API_KEY = "bad232ddd5f3d59564e9";
-        private static String[] currencyCodes = { "AED", "AFN", "ALL", "AMD", "ANG",
+        private static string[] currencyCodes = { "AED", "AFN", "ALL", "AMD", "ANG",
             "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD",
             "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYR",
             "BZD", "CAD", "CDF", "CHE", "CHF", "CHW", "CLF", "CLP", "CNY", "COP",
@@ -42,12 +41,13 @@ namespace CurrencyConverter
             bool isDecimal = false;
             bool isValidCurrency = false;
 
-
+            // Loop until a valid currency is entered
             while (!isValidCurrency)
             {
                 Console.WriteLine("Which currency would you like to convert from?");
                 currencyFrom = Console.ReadLine().ToUpper();
 
+                // Check if input is a valid currency
                 if (currencyCodes.Contains(currencyFrom))
                 {
                     isValidCurrency = true;
@@ -59,11 +59,13 @@ namespace CurrencyConverter
 
             isValidCurrency = false;
 
+            // Loop until a valid currency is entered
             while (!isValidCurrency)
             {
                 Console.WriteLine("\nWhich currency would you like to convert to?");
                 currencyTo = Console.ReadLine().ToUpper();
 
+                // Check if input is a valid currency
                 if (currencyCodes.Contains(currencyTo))
                 {
                     isValidCurrency = true;
@@ -73,12 +75,12 @@ namespace CurrencyConverter
                 }
             }
 
-            // Run loop until a valid format is entered (i.e. decimal)
+            // Loop until a valid format is entered (i.e. decimal)
             while (!isDecimal)
             {
                 Console.WriteLine("\nHow much " + currencyFrom + " would you like to convert to " + currencyTo + "?");
 
-                //Check to see if entered value is a valid format (i.e. decimal)
+                //Check to see if user input is a valid format (i.e. decimal)
                 isDecimal = decimal.TryParse(Console.ReadLine(), out amount);
 
                 if (!isDecimal)
@@ -146,7 +148,11 @@ namespace CurrencyConverter
                 try
                 {
                     client.BaseAddress = new Uri(URL);
+
+                    // Call API and store the response
                     var response = await client.GetAsync($"/api/v6/convert?q={currencyFrom}_{currencyTo}&compact=y&apiKey={API_KEY}");
+
+                    // Get result from API as a string
                     var stringResult = await response.Content.ReadAsStringAsync();
 
                     return stringResult;
