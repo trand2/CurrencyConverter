@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CurrencyConverter
 {
@@ -11,21 +12,66 @@ namespace CurrencyConverter
 
         private const string URL = "https://free.currencyconverterapi.com";
         private const string API_KEY = "bad232ddd5f3d59564e9";
+        private static String[] currencyCodes = { "AED", "AFN", "ALL", "AMD", "ANG",
+            "AOA", "ARS", "AUD", "AWG", "AZN", "BAM", "BBD", "BDT", "BGN", "BHD",
+            "BIF", "BMD", "BND", "BOB", "BOV", "BRL", "BSD", "BTN", "BWP", "BYR",
+            "BZD", "CAD", "CDF", "CHE", "CHF", "CHW", "CLF", "CLP", "CNY", "COP",
+            "COU", "CRC", "CUC", "CUP", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD",
+            "EGP", "ERN", "ETB", "EUR", "FJD", "FKP", "GBP", "GEL", "GHS", "GIP",
+            "GMD", "GNF", "GTQ", "GYD", "HKD", "HNL", "HRK", "HTG", "HUF", "IDR",
+            "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KGS",
+            "KHR", "KMF", "KPW", "KRW", "KWD", "KYD", "KZT", "LAK", "LBP", "LKR",
+            "LRD", "LSL", "LTL", "LVL", "LYD", "MAD", "MDL", "MGA", "MKD", "MMK",
+            "MNT", "MOP", "MRO", "MUR", "MVR", "MWK", "MXN", "MXV", "MYR", "MZN",
+            "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PGK",
+            "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR",
+            "SBD", "SCR", "SDG", "SEK", "SGD", "SHP", "SLL", "SOS", "SRD", "SSP",
+            "STD", "SYP", "SZL", "THB", "TJS", "TMT", "TND", "TOP", "TRY", "TTD",
+            "TWD", "TZS", "UAH", "UGX", "USD", "USN", "USS", "UYI", "UYU", "UZS",
+            "VEF", "VND", "VUV", "WST", "XAF", "XAG", "XAU", "XBA", "XBB", "XBC",
+            "XBD", "XCD", "XDR", "XFU", "XOF", "XPD", "XPF", "XPT", "XTS", "XXX",
+            "YER", "ZAR", "ZMW"};
+
 
   
         public static void Main(string[] args)
         {
-            string currencyFrom;
-            string currencyTo;
+            string currencyFrom = "";
+            string currencyTo = "";
             decimal amount = 0;
             bool isDecimal = false;
+            bool isValidCurrency = false;
 
-          
-            Console.WriteLine("Which currency would you like to convert from?");
-            currencyFrom = Console.ReadLine();
 
-            Console.WriteLine("\nWhich currency would you like to convert to?");
-            currencyTo = Console.ReadLine();
+            while (!isValidCurrency)
+            {
+                Console.WriteLine("Which currency would you like to convert from?");
+                currencyFrom = Console.ReadLine().ToUpper();
+
+                if (currencyCodes.Contains(currencyFrom))
+                {
+                    isValidCurrency = true;
+                } else
+                {
+                    Console.WriteLine("\nInvalid currency, please try again.");
+                }
+            }
+
+            isValidCurrency = false;
+
+            while (!isValidCurrency)
+            {
+                Console.WriteLine("\nWhich currency would you like to convert to?");
+                currencyTo = Console.ReadLine().ToUpper();
+
+                if (currencyCodes.Contains(currencyTo))
+                {
+                    isValidCurrency = true;
+                } else
+                {
+                    Console.WriteLine("\nInvalid currency, please try again.");
+                }
+            }
 
             // Run loop until a valid format is entered (i.e. decimal)
             while (!isDecimal)
@@ -43,7 +89,7 @@ namespace CurrencyConverter
 
             decimal value = ConvertCurrency(currencyFrom, currencyTo, amount);
 
-            Console.WriteLine("\nThe total is " + currencyTo + " " + value);
+            Console.WriteLine("\n" + currencyFrom + " " + amount + " = " + currencyTo + " " + value);
         }
 
         /// <summary>
@@ -52,7 +98,7 @@ namespace CurrencyConverter
         /// <param name="currencyFrom"></param>
         /// <param name="currencyTo"></param>
         /// <param name="amount"></param>
-        /// <returns>"convertedAmount"</returns>
+        /// <returns>Converted currency amount</returns>
         public static decimal ConvertCurrency(string currencyFrom, string currencyTo, decimal amount)
         {
             decimal exchangeRate = GetExchangeRate(currencyFrom, currencyTo);
@@ -108,7 +154,6 @@ namespace CurrencyConverter
                 catch (HttpRequestException httpRequestException)
                 {
                     Console.WriteLine(httpRequestException.StackTrace);
-                    Environment.Exit(1);
                     return "Error calling API. Please do manual lookup.";
 
                 }
