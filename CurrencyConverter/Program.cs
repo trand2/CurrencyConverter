@@ -47,7 +47,7 @@ namespace CurrencyConverter
             // Loop until a valid currency is entered
             while (!isValidCurrency)
             {
-                Console.WriteLine("Which currency would you like to convert from?");
+                Console.Write("Which currency would you like to convert from (Use three letter abbreviation): ");
                 currencyFrom = Console.ReadLine().ToUpper();
 
                 // Check if input is a valid currency
@@ -56,7 +56,7 @@ namespace CurrencyConverter
                     isValidCurrency = true;
                 } else
                 {
-                    Console.WriteLine("\nInvalid currency, please try again.");
+                    Console.WriteLine("\nInvalid currency, please try again.\n");
                 }
             }
 
@@ -65,7 +65,7 @@ namespace CurrencyConverter
             // Loop until a valid currency is entered
             while (!isValidCurrency)
             {
-                Console.WriteLine("\nWhich currency would you like to convert to?");
+                Console.Write("\nWhich currency would you like to convert to (Use three letter abbreviation): ");
                 currencyTo = Console.ReadLine().ToUpper();
 
                 // Check if input is a valid currency
@@ -81,7 +81,7 @@ namespace CurrencyConverter
             // Loop until a valid format is entered (i.e. decimal)
             while (!isDecimal)
             {
-                Console.WriteLine("\nHow much " + currencyFrom + " would you like to convert to " + currencyTo + "?");
+                Console.Write("\nHow much " + currencyFrom + " would you like to convert to " + currencyTo + ": ");
 
                 // Check to see if user input is a valid format (i.e. decimal)
                 // If so then store the value in amount and change isDecimals value to true
